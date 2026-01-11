@@ -1,0 +1,29 @@
+<div class="container">
+    <header class="page-header">
+        <h1>Recommended Books</h1>
+        <p class="subtitle">Explore our curated collection of must-reads</p>
+    </header>
+
+    <div class="actions-bar">
+        <app-book-search (search)="onSearch($event)"></app-book-search>
+        <button class="btn" (click)="openCloseModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" style="width: 1.25rem; height: 1.25rem;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Add Book
+        </button>
+    </div>
+    <div class="book-grid">
+        <!-- Si la liste n'est pas vide -->
+        <ng-container *ngIf="filteredBooks.length > 0; else noBooks">
+            <app-book-item *ngFor="let book of filteredBooks" [book]="book" class="book-card-wrapper"></app-book-item>
+        </ng-container>
+        <!-- Sinon afficher un message -->
+        <ng-template #noBooks>
+            <p>No books found .</p>
+        </ng-template>
+        <div class="modal-overlay" *ngIf="isModalOpen">
+            <app-book-form (addBook)="addBook($event)" (cancel)="openCloseModal()"></app-book-form>
+        </div>
+    </div>
